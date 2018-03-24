@@ -1,0 +1,101 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+	   default-lazy-init="true">
+
+	<!-- 读取配置文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/hibernate.properties" />
+	<!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		&lt;!&ndash; 定义最大连接数 &ndash;&gt;
+		<property name="maxActive" value="500" />
+		&lt;!&ndash; 定义最大可空闲的连接数 &ndash;&gt;
+		<property name="maxIdle" value="30" />
+		&lt;!&ndash; 定义最大可以等待的链接 &ndash;&gt;
+		<property name="maxWait" value="10000" />
+
+		<property name="timeBetweenEvictionRunsMillis" value="3600000" />
+		<property name="minEvictableIdleTimeMillis" value="3600000" />
+		&lt;!&ndash; 定义默认提交方式 &ndash;&gt;
+		<property name="defaultAutoCommit" value="true" />
+		<property name="removeAbandoned" value="true" />
+		<property name="logAbandoned" value="true"></property>
+		<property name="removeAbandonedTimeout" value="60"></property>
+	</bean>-->
+	<!-- 数据源配置, 使用druid连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!--<property name="filters" value="mergeStat" />-->
+		<property name="filters" value="config" />
+		<property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${jdbc.publickey}" />
+		<!-- 申请连接的时候检测 -->
+		<property name="testWhileIdle" value="true"></property>
+		<!-- 检测连接 -->
+		<property name="validationQuery" value="select 'x' from dual"></property>
+		<!--maxActive: 最大连接数量 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<!--initialSize: 初始化连接 -->
+		<property name="initialSize" value="${jdbc.maxIdle}" />
+		<property name="testOnBorrow" value="true"/>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+			</props>
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.dream.*</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 配置 Annotation 驱动，扫描@Transactional注解的类定义事务  -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	<!-- 事务的传播特性 -->
+<!--	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="alter*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>-->
+	<!--	事务-->
+<!--	<aop:config proxy-target-class="true">
+		<aop:pointcut expression="execution(public * com.dream.brick.*.dao.*.*(..))"
+			id="transactionPC" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPC" />
+	</aop:config>
+	&lt;!&ndash;	注解controller切面支持&ndash;&gt;
+	<aop:aspectj-autoproxy />-->
+	
+</beans>

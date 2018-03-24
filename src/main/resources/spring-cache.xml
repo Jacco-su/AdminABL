@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="defaultCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"> 
+	   <property name="configLocation"> 
+	   <value>classpath:ehcache.xml</value> 
+	   </property> 
+	</bean> 
+	
+	<!-- 定义ehCache的工厂，并设置所使用的Cache name --> 
+	<bean id="shortCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+	   <property name="cacheManager"> 
+	   <ref local="defaultCacheManager"/> 
+	   </property> 
+	   <property name="cacheName"> 
+	      <value>SHORT_CACHE</value> 
+	   </property> 
+	</bean> 
+
+	
+	<!-- find/create cache拦截器 --> 
+	
+	<bean id="methodCI" class="com.dream.brick.cache.MethodCacheInterceptor">
+	   <property name="cache"> 
+	   <ref local="shortCache" /> 
+	   </property> 
+	</bean> 
+	
+	
+	<!-- flush cache拦截器 --> 
+	<bean id="mcAAdvice" class="com.dream.brick.cache.MethodCacheAfterAdvice">
+	   <property name="cache"> 
+	   <ref local="shortCache" /> 
+	   </property> 
+	</bean> 
+	
+	
+	<bean id="methodCachePointCutAdvice" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"> 
+	   <property name="advice"> 
+	   <ref local="mcAAdvice"/> 
+	   </property> 
+	   <property name="patterns"> 
+	   <list> 
+	      <value>.*add.*</value>
+	      <value>.*save.*</value>
+	      <value>.*update.*</value>
+	      <value>.*modify.*</value>
+	      <value>.*delete.*</value>
+	   </list> 
+	   </property> 
+	</bean>
+	
+	
+	<bean id="methodCachePointCut" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"> 
+	   <property name="advice"> 
+	   <ref local="methodCI"/> 
+	   </property> 
+	   <property name="patterns"> 
+	   <list> 
+	      <value>.*findIdAndName.*</value>
+	      <value>.*findDeptIdAndName.*</value>
+	      <value>.*findAllUserRoles.*</value>
+	      <value>.*cacheBigclass.*</value>
+	      <value>.*cacheAllUser.*</value>
+	      <value>.*cacheItemName.*</value>
+	      <value>.*cacheCompanyName.*</value>
+		   <value>.*cacheProdName.*</value>
+		   <value>.*cacheAllProject.*</value>
+		   <value>.*cacheProdName.*</value>
+	   </list> 
+	   </property> 
+	</bean>
+</beans>

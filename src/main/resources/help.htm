@@ -1,0 +1,1015 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<title>蓝牙智能锁服务端使用说明文档</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+h1
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:240%;
+	page-break-after:avoid;
+	font-size:22.0pt;
+	font-family:"Calibri",sans-serif;}
+h2
+	{mso-style-link:"标题 2 字符";
+	margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:173%;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Calibri Light",sans-serif;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:5.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:5.0pt;
+	margin-left:11.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:5.0pt;
+	margin-left:22.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 字符";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 字符";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:#954F72;
+	text-decoration:underline;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"批注框文本 字符";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoNoSpacing, li.MsoNoSpacing, div.MsoNoSpacing
+	{mso-style-link:"无间隔 字符";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
+	{margin-top:24.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Calibri Light",sans-serif;
+	color:#2E74B5;
+	font-weight:bold;}
+span.a
+	{mso-style-name:"页眉 字符";
+	mso-style-link:页眉;}
+span.a0
+	{mso-style-name:"页脚 字符";
+	mso-style-link:页脚;}
+span.2
+	{mso-style-name:"标题 2 字符";
+	mso-style-link:"标题 2";
+	font-family:"Calibri Light",sans-serif;
+	font-weight:bold;}
+span.a1
+	{mso-style-name:"批注框文本 字符";
+	mso-style-link:批注框文本;}
+span.a2
+	{mso-style-name:"无间隔 字符";
+	mso-style-link:无间隔;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN link="#0563C1" vlink="#954F72" style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 align=left
+ width="80%" style='width:80.0%;border-collapse:collapse;border:none;
+ margin-left:7.1pt;margin-right:7.1pt'>
+ <tr>
+  <td width=511 valign=top style='width:383.6pt;border:none;border-left:solid #5B9BD5 2.25pt;
+  padding:10.8pt 5.75pt 10.8pt 5.75pt'>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-family:"Calibri Light",sans-serif'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=511 valign=top style='width:383.6pt;border:none;border-left:solid #5B9BD5 2.25pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNoSpacing><b><span style='font-size:22.0pt;font-family:宋体;
+  color:#0070C0'>蓝牙智能锁服务端使用说明文档</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=511 valign=top style='width:383.6pt;border:none;border-left:solid #5B9BD5 2.25pt;
+  padding:10.8pt 5.75pt 10.8pt 5.75pt'>
+  <p class=MsoNoSpacing><span style='font-size:15.0pt;font-family:宋体;
+  color:#0070C0'>测试版说明文档</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:36.0pt'>&nbsp;</span></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 align=left
+ width="80%" style='width:80.0%;border-collapse:collapse;margin-left:7.1pt;
+ margin-right:7.1pt'>
+ <tr>
+  <td width=511 valign=top style='width:383.6pt;padding:10.8pt 5.75pt 10.8pt 5.75pt'>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-size:36.0pt;color:#5B9BD5'>&nbsp;</span></p>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-size:36.0pt;color:#5B9BD5'>&nbsp;</span></p>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-size:36.0pt;color:#5B9BD5'>&nbsp;</span></p>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-size:36.0pt;color:#5B9BD5'>&nbsp;</span></p>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-size:36.0pt;color:#5B9BD5'>&nbsp;</span></p>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-size:36.0pt;color:#5B9BD5'>&nbsp;</span></p>
+  <p class=MsoNoSpacing><span lang=EN-US style='font-size:36.0pt;color:#5B9BD5'>&nbsp;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:36.0pt'>&nbsp;</span></p>
+
+<b><span lang=EN-US style='font-size:10.5pt;font-family:"Calibri",sans-serif'><br
+clear=all style='page-break-before:always'>
+</span></b>
+
+<p class=MsoNormal align=left style='text-align:left'><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoTocHeading><span style='font-family:宋体'>目录</span></p>
+
+<p class=MsoToc1><span lang=EN-US><span class=MsoHyperlink><a
+href="#_Toc507435687"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>一、</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>软件登陆</span></span><span style='color:windowtext;
+display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435689"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>二、</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>系统主界面</span></span><span style='color:windowtext;
+display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435690">1.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>欢迎页面</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435691">2.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>管理员</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>修改资料</span></span><span lang=EN-US><span lang=EN-US> </span></span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>修改密码</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>5</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435692">3.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>个人中心</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>5</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435693">4.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>全屏</span></span>/<span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>窗口</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>6</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435694">5.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>退出</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>6</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435695"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>三、</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>授权管理</span></span><span style='color:windowtext;
+display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>6</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435696">1.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>在线授权</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>6</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435697">2.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>离线授权</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435698">3.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>区域授权</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435699">4.<span lang=EN-US style='font-family:宋体'><span
+lang=EN-US>授权记录</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>8</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435700"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>四、</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>锁具管理</span></span><span style='color:windowtext;
+display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>8</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435701">1.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>添加钥匙</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>8</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435702">2.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>修改钥匙</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435703">3.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>删除钥匙</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435704"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>五、</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>门锁管理</span></span><span style='color:windowtext;
+display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435705">1.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>添加门锁</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435706">2.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>修改门锁</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>12</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435707">3.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>删除门锁</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>12</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435708"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>六、</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>日志记录</span></span><span style='color:windowtext;
+display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435709">1.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>记录日志查询</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435710"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>七、</span></span><span
+lang=EN-US><span lang=EN-US> </span></span><span lang=EN-US style='font-family:
+宋体'><span lang=EN-US>统计报表</span></span><span style='color:windowtext;
+display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435711"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>八、采集器管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435712"><span lang=EN-US style='font-family:宋体'><span lang=EN-US>九、蓝牙控制器管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435713"><span lang=EN-US style='font-family:宋体;background:silver'><span
+lang=EN-US>十、系统中心</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>14</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435714">1.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>区域管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>14</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435715">2.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>站点管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>16</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435716">3.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>人员管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>16</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435717">4.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>角色管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>18</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435718">5.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>模块管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>18</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435719">6.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>操作员管理</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>19</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435720">7.<span style='font-size:10.5pt;line-height:115%;
+color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>系统操作日志</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>19</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc507435721">8.<span lang=EN-US style='font-family:宋体'><span
+lang=EN-US>帮助文档</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>19</span></a></span></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US>&nbsp;</span></b></p>
+
+<h1 style='margin-left:14.45pt;text-indent:21.0pt'><a name="_Toc507435687"></a><a
+name="_Toc495490066"><span lang=EN-US>一、</span><span style='font-family:宋体'>软件登陆</span></a></h1>
+
+<h2 style='margin-left:21.0pt'><a name="_Toc507435688"><span lang=EN-US><img
+width=510 height=265 id="图片 0" src="help.files/image001.gif"></span></a></h2>
+
+<p class=MsoListParagraph style='margin-left:18.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='font-family:Wingdings'>l<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span style='font-family:宋体'>输入自己的登陆帐号和密码点击登陆即可</span></p>
+
+<h1 style='margin-left:14.45pt;text-indent:21.0pt'><a name="_Toc507435689"></a><a
+name="_Toc495490067"><span lang=EN-US>二、</span><span style='font-family:宋体'>系统主界面</span></a></h1>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435690"></a><a
+name="_Toc495490068"><span lang=EN-US>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>欢迎页面</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=290 id="图片 1"
+src="help.files/image002.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435691"></a><a
+name="_Toc495490069"><span lang=EN-US>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>管理员</span> </a><span
+style='font-family:宋体'>修改资料</span> <span style='font-family:宋体'>修改密码</span></h2>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=282 id="图片 2"
+src="help.files/image003.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='color:red'>*</span><span
+style='font-family:宋体'>登陆进去，点击修改密码</span><span lang=EN-US>,</span><span
+style='font-family:宋体'>输入原密码，然后输入新密码，如果原密码验证通过即可进行密码修改操作，修改完成后，系统会自动退出，需重新进行登陆。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435692"><span
+lang=EN-US>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-family:宋体'>个人中心</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=278 id="图片 29"
+src="help.files/image004.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>点击</span><span lang=EN-US>”</span><span
+style='font-family:宋体'>个人中心</span><span lang=EN-US>” </span><span
+style='font-family:宋体'>修改自己信息</span><span lang=EN-US>.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435693"></a><a
+name="_Toc495490071"><span lang=EN-US>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>全屏</span><span lang=EN-US>/</span></a><span
+style='font-family:宋体'>窗口</span></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>点击浏览器“全屏”或</span><span
+lang=EN-US>”</span><span style='font-family:宋体'>窗口</span><span lang=EN-US>”</span><span
+style='font-family:宋体'>，系统会自动适应到屏幕大小。</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435694"></a><a
+name="_Toc495490072"><span lang=EN-US>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>退出</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=276 id="图片 3"
+src="help.files/image005.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>点击</span> <span
+style='font-family:宋体'>荧光标记位置“安全退出”即退出系统，重新登陆或切换账户可以继续操作。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h1 style='margin-left:14.45pt;text-indent:21.0pt'><a name="_Toc507435695"></a><a
+name="_Toc495490073"><span lang=EN-US>三、</span><span style='font-family:宋体'>授权管理</span></a></h1>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435696"></a><a
+name="_Toc495490074"><span lang=EN-US>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>在线授权</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=287 id="图片 4"
+src="help.files/image006.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>在线授权即对锁进行</span><span
+lang=EN-US>,</span><span style='font-family:宋体'>选择授权使用人和所开的锁具，可以点击区域，选择相应的采集器和对应蓝牙控制器确定钥匙位置</span>
+<span lang=EN-US>,</span><span style='font-family:宋体'>授权。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435697"></a><a
+name="_Toc495490075"><span lang=EN-US>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>离线授权</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=288 id="图片 15"
+src="help.files/image007.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>离线授权即对钥匙进行选择授权使用人和所开的锁具的范围，可以点击选择，选择相应的授权使用人和锁具，每个钥匙最多只能</span><span
+lang=EN-US>255</span><span style='font-family:宋体'>把锁。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435698"><span
+lang=EN-US>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-family:宋体'>区域授权</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=288 id="图片 5"
+src="help.files/image008.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>区域授权是针对于钥匙进行区域范围内授权，可以选择相应的省、市、县</span><span
+lang=EN-US>/</span><span style='font-family:宋体'>区、站点进行授权，授权后该范围内的所有的锁具都可以使用该钥匙进行打开和关闭操作。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2><a name="_Toc507435699"><span lang=EN-US>4.</span></a><span
+style='font-family:宋体'>授权记录</span></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=285 id="图片 6"
+src="help.files/image009.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>可以根据时间范围对钥匙授权记录进行查询。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h1 style='margin-left:14.45pt;text-indent:21.0pt'><a name="_Toc507435700"></a><a
+name="_Toc495490077"><span lang=EN-US>四、</span><span style='font-family:宋体'>锁具管理</span></a></h1>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435701"></a><a
+name="_Toc495490078"><span lang=EN-US>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>添加钥匙</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>钥匙管理界面，点击添加钥匙可以打开钥匙添加界面，如下图</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=288 id="图片 30"
+src="help.files/image010.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=270 id="图片 8"
+src="help.files/image011.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>选择左方区域，即可进行钥匙添加操作，选择相应的站点和所有人，获取</span><span
+lang=EN-US>mac,</span><span style='font-family:宋体'>点击保存即可添加成功。如下图</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=283 id="图片 9"
+src="help.files/image012.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=287 id="图片 10"
+src="help.files/image013.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435702"></a><a
+name="_Toc495490079"><span lang=EN-US>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>修改钥匙</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=288 id="图片 11"
+src="help.files/image014.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>选中要修改的钥匙，点击修改，信息将显示到窗口，输入要修改的内容。然后点击保存，即完成修改操作。</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435703"></a><a
+name="_Toc495490080"><span lang=EN-US>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>删除钥匙</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>删除钥匙会提示是否删除，确定是之后，将对记录进行删除操作。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h1 style='margin-left:14.45pt;text-indent:21.0pt'><a name="_Toc507435704"></a><a
+name="_Toc495490081"><span lang=EN-US>五、</span><span style='font-family:宋体'>门锁管理</span></a></h1>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435705"></a><a
+name="_Toc495490082"><span lang=EN-US>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>添加门锁</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=270 id="图片 12"
+src="help.files/image015.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>点击添加操作之后，下方输入栏将解禁，可以进行添加操作</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>门锁可以根据左侧的区域进行筛选查询</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>录入相关的信息，点击保存设置即可成功添加门锁。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=287 id="图片 13"
+src="help.files/image016.gif"></span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435706"></a><a
+name="_Toc495490083"><span lang=EN-US>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>修改门锁</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=288 id="图片 16"
+src="help.files/image017.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>选中要修改的门锁信息，点击修改门锁，即可显示该门锁相应的信息，点击保存即可完成修改操作</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435707"></a><a
+name="_Toc495490084"><span lang=EN-US>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>删除门锁</span></a></h2>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:0cm'><span
+style='font-family:宋体'>删除门锁会提示是否删除，确定是之后，将对记录进行删除操作。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h1 style='margin-left:14.45pt;text-indent:21.0pt'><a name="_Toc507435708"></a><a
+name="_Toc495490085"><span lang=EN-US>六、</span><span style='font-family:宋体'>日志记录</span></a></h1>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435709"></a><a
+name="_Toc495490086"><span lang=EN-US>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>记录日志查询</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>记录日志，将钥匙放置即可完成钥匙所有的操作记录的上传操作，记录会自动上传并保存到数据库中，可以对操作日志记录进行查询和筛选。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h1 style='margin-left:14.45pt;text-indent:21.0pt'><a name="_Toc507435710"></a><a
+name="_Toc495490087"><span lang=EN-US>七、</span><span style='font-family:宋体'>统计报表</span></a></h1>
+
+<p class=MsoNormal><span style='font-family:宋体'>暂无</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h1><a name="_Toc507435711"><span style='font-family:宋体'>八、采集器管理</span></a></h1>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=288 id="图片 31"
+src="help.files/image018.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h1><a name="_Toc507435712"><span style='font-family:宋体'>九、蓝牙控制器管理</span></a></h1>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=287 id="图片 32"
+src="help.files/image019.gif"></span></p>
+
+<h1 style='margin-left:35.45pt'><a name="_Toc507435713"><span style='font-family:
+宋体;background:silver'>十、系统中心</span></a></h1>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435714"></a><a
+name="_Toc495490089"><span lang=EN-US>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>区域管理</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=288 id="图片 17"
+src="help.files/image020.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>首先对区域进行添加操作，完成对管理区域的添加操作，授权码为</span><span
+lang=EN-US>4</span><span style='font-family:宋体'>位唯一数字，为方便统一管理，请按照行政区划格式进行编写</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=290 id="图片 18"
+src="help.files/image021.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>选择相应的区域，右侧可以进行编辑操作</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=289 id="图片 19"
+src="help.files/image022.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>左侧选中相应的区域可以进行删除操作，删除可以删除该节点，也可以对该节点下所有的子节点进行删除操作。</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435715"></a><a
+name="_Toc495490090"><span lang=EN-US>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>站点管理</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=290 id="图片 20"
+src="help.files/image023.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>站点添加操作，如区域说明</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=287 id="图片 21"
+src="help.files/image024.gif"></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>站点编辑操作，如区域编辑说明</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435716"></a><a
+name="_Toc495490091"><span lang=EN-US>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>人员管理</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>对员工的管理，包括添加员工、编辑员工、删除员工操作。具体操作如下图</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=290 id="图片 23"
+src="help.files/image025.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>根据查询的姓名或者电话进行筛选查询</span></p>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=291 id="图片 24"
+src="help.files/image026.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>添加操作</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435717"></a><a
+name="_Toc495490092"><span lang=EN-US>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>角色管理</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=289 id="图片 26"
+src="help.files/image027.gif"></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>对系统的权限进行设置，根据不同的模块信息进行授权，改版后未完善</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435718"></a><a
+name="_Toc495490093"><span lang=EN-US>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>模块管理</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=553 height=289 id="图片 27"
+src="help.files/image028.gif"></span></p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:0cm'><span
+style='font-family:宋体'>系统所有的功能模块进行列表显示，供角色添加时使用</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435719"></a><a
+name="_Toc495490094"><span lang=EN-US>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:宋体'>操作员管理</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><img width=554 height=291 id="图片 28"
+src="help.files/image029.gif"></span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span style='font-family:宋体'>系统权限管理，添加管理员可以分配不同的角色，对不同的系统角色，进行不同的操作管理权限控制。</span></p>
+
+<h2 style='margin-left:21.0pt;text-indent:-21.0pt'><a name="_Toc507435720"><span
+lang=EN-US>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-family:宋体'>系统操作日志</span></a></h2>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span style='font-family:宋体'>待完善</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2><a name="_Toc507435721"><span lang=EN-US>8.</span></a><span
+style='font-family:宋体'>帮助文档</span></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>点击帮助文档，即可打开帮助文档内容。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
