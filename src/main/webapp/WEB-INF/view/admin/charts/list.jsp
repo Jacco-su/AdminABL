@@ -17,7 +17,7 @@
 </div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
+    var myChart = echarts.init(document.getElementById('HttpMain'));
 
 
     var app = {};

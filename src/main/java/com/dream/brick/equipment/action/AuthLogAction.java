@@ -57,6 +57,7 @@ public class AuthLogAction {
     @RequestMapping("/prList")
     public String prList()
             throws Exception {
+        System.out.println("-------------授权----------");
         return "admin/authlog/list";
     }
 
