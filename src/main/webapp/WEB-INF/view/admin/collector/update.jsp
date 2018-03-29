@@ -12,7 +12,7 @@
     <form name="editForm" id="editForm" action="${basePath}/collector/update" method="post">
         <table class="mytable" align="center">
             <tr>
-                <td>采集器ID:</td>
+                <td>控制器ID:</td>
                 <td>
                     <input type="hidden" name="id" value="${collectora.id}"/>
                     <input name="dept.id" type="hidden" value="${collectora.dis.id}"/>
@@ -62,10 +62,10 @@
         var p = $("#ccode").val();
         if (!p.match(/\d{8}$/)) {
 //            alert("请输入8位数字！");
-            $.messager.alert('提示', '请输入8位数字的采集器ID！', 'warning');
+            $.messager.alert('提示', '请输入8位数字的控制器ID！', 'warning');
         }
         if (p.length > 8) {
-            $.messager.alert('提示', '采集器ID输入超过8位！', 'warning');
+            $.messager.alert('提示', '控制器ID输入超过8位！', 'warning');
         }
 
 

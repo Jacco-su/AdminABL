@@ -68,7 +68,7 @@ public class HttpAction {
             qgdis.setId(keys[8]);
             authLog.setQgdis(qgdis);
             authLogDao.save(authLog);
-            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],keys[2],keys[5],keys[6]),Constants.LOCK_KEY).toString();//
+            authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],"DD:17:16:65:FB:33",keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }
         else if("1".equals(keys[1])){
             //获取门锁信息  key=0000000002,1,DF:98,
@@ -92,11 +92,11 @@ public class HttpAction {
             authModel = new AuthModel(new byte[]{13}).toString();
         }
 
-        String macAddess=keys[2].replace(":","");
+        String macAddess="DD:17:16:65:FB:33".replace(":","");
         macAddess="00000000000000000000"+macAddess;
 //        String macAddess="00000000000000000000";
         //控制器ID==》页面获取 , 格式==》12345
-        String collectoreID="12345";
+        String collectoreID=keys[0];
         DataProtocol dataProtocol=new DataProtocol(new byte[]{00,01}, ByteUtil.hexToBytes(macAddess),ByteUtil.hexToBytes(authModel));
         JsonDataProtocol jsonDataProtocol=new JsonDataProtocol();
 //            jsonDataProtocol.setCollectorId(keys[0]);

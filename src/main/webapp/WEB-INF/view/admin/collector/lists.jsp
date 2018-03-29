@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>采集器列表</title>
+    <title>控制器列表</title>
     <link rel="stylesheet" type="text/css"
           href="${basePath}/js/easyui/themes/default/easyui.css"/>
     <link rel="stylesheet" type="text/css"
@@ -24,7 +24,7 @@
             var deptId = "";
             var infolist = $('#infolist');
             infolist.datagrid( {
-                title: '采集器列表',
+                title: '控制器列表',
                 iconCls : 'icon-users',
                 width : '95%',
                 height : 560,
@@ -57,12 +57,12 @@
 //                        align : 'center'
 //                    },
                     {
-                        title: '采集器编号',
+                        title: '控制器编号',
                         field: 'id',
                         width: $(this).width() * 0.1,
                         align: 'center'
                     }, {
-                        title: '采集器ID',
+                        title: '控制器ID',
                         field: 'ccode',
                         width: $(this).width() * 0.2,
                         align: 'center'
@@ -139,7 +139,7 @@
             function add() {
                 if (deptId != "") {
                     addWin = $.createWin( {
-                        title: "采集器添加",
+                        title: "控制器添加",
                         url : basePath+'/collector/prAdd?deptId='+deptId,
                         height: 350,
                         width: 500,
@@ -191,7 +191,7 @@
             }
             function showEdit(id){
                 updateWin = $.createWin( {
-                    title: "采集器修改",
+                    title: "控制器修改",
                     url : basePath+'/collector/prUpdate?deptId='+deptId,
                     data : 'id=' +id,
                     height: 350,
@@ -247,7 +247,7 @@
             function search(){
                 addWin = $.createWin( {
                     title : "查询条件",
-                    contents: "<table style='font-size:12px;'><tr><td>采集器：</td><td><input id='dissName' /></td></tr></table>",
+                    contents: "<table style='font-size:12px;'><tr><td>控制器：</td><td><input id='dissName' /></td></tr></table>",
                     width : 300,
                     buttons : [ {
                         text : '查询',
