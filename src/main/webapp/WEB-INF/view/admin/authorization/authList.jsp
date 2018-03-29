@@ -379,7 +379,7 @@
                                     <option value="0">---请选择---</option>
                                 </select></td>--%>
                             <td>
-                                <button class="easyui-linkbutton" onclick="getLock(2)">初始门锁</button>
+                                <button class="easyui-linkbutton" onclick="getLock(2)">初始化锁</button>
                             </td>
                             <td>
                                 <button class="easyui-linkbutton" onclick="getLock(1)">在线门锁信息</button>
