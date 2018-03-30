@@ -89,7 +89,7 @@ public class HttpsConnection {
             conn.setRequestProperty("content-type", "application/x-www-form-urlencoded");
             //设置超时时间
             conn.setConnectTimeout(1000);
-            conn.setReadTimeout(6000);
+            conn.setReadTimeout(10000);
             // 建立实际的连接
             conn.connect();
             // 定义 BufferedReader输入流来读取URL的响应,设置接收格式

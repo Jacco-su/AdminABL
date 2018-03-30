@@ -32,7 +32,7 @@ public class HttpAction {
     public String get(String key,HttpServletRequest request) {
         String [] keys=key.split(",");
         String  authModel=null;
-        String message = "";
+
         /*绑定蓝牙钥匙*/
         if("7".equals(keys[1])){
 
@@ -53,6 +53,7 @@ public class HttpAction {
             authLog.setCreateTime(FormatDate.getYMdHHmmss());
             authLog.setAuthStartTime(keys[6]);
             authLog.setAuthName("在线授权!");
+            authLog.setAuthStatus("1");
             User user=new User();
             user.setId(keys[7]);
             authLog.setUser(user);
@@ -105,11 +106,9 @@ public class HttpAction {
 
         String getUrl="http://localhost:8888";
         String param=dataProtocol.toString()+collectoreID;
-        message = HttpsConnection.sendGet(getUrl, param,"utf-8");
-        System.out.println("参数------"+param);
-        System.out.println("Get请求:"+HttpsConnection.sendGet(getUrl, param,"utf-8"));
+        String message = HttpsConnection.sendGet(getUrl, param,"utf-8");
+//        System.out.println("Get请求:"+HttpsConnection.sendGet(getUrl, param,"utf-8"));
         System.out.println("返回内容------"+message);
-
 
         return  StringUtil.jsonValue("1", message.replace("*",""));
     }
