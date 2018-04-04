@@ -32,6 +32,15 @@ public class MenuTree implements Serializable {
 
 	private List<MenuTree> children; //子节点数据
 	private String iconCls;
+	private String AreaCode;
+
+	public String getAreaCode() {
+		return AreaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		AreaCode = areaCode;
+	}
 
 	public String getId() {
 		return id;

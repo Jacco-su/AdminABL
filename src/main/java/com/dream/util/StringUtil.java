@@ -9,6 +9,19 @@ import java.util.List;
 import java.util.Map;
 
 public class StringUtil {
+	public static String addZeroForNum(String str, int strLength) {
+		int strLen = str.length();
+		StringBuffer sb = null;
+		while (strLen < strLength) {
+			sb = new StringBuffer();
+			//sb.append("0").append(str);// 左补0
+			sb.append(str).append("0");//右补0
+			str = sb.toString();
+			strLen = str.length();
+		}
+		return str;
+	}
+
 	public static String jsonValue(String result, String message){
 		 JSONObject json=new JSONObject();
 		 json.put("result", result);

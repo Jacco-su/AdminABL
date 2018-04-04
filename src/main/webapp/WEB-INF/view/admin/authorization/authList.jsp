@@ -19,6 +19,7 @@
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath="${basePath}";
+        var deptId = "";
         $(function() {
             $('#tr_collectore').hide();
            // getkeys();
@@ -30,6 +31,7 @@
                 },
                 onClick:function(node){
                     refresh(node.id);
+                    deptId = node.areaCode;
                 },onLoadSuccess: function (node, data) {
                     $('#tree').tree('expandAll');
                 }
@@ -267,7 +269,7 @@
                 +t+","
 //                +$('#collectore').combobox('getText')+","
                 +""+","
-                +""+","
+                +deptId+","
                 +$('#locks').val()+","
                 +$('#startDate').val()+","
                 +$('#endDate').val()+","

@@ -10,7 +10,9 @@ import com.dream.socket.entity.JsonDataProtocol;
 import com.dream.socket.utils.ByteUtil;
 import com.dream.socket.utils.Constants;
 import com.dream.util.FormatDate;
+import com.dream.util.RedisTemplateUtil;
 import com.dream.util.StringUtil;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,11 +27,15 @@ import java.util.UUID;
 public class HttpAction {
 
     @Resource
+    private RedisTemplate redisTemplate;
+    private RedisTemplateUtil redisTemplateUtil = null;
+    @Resource
     private IAuthLogDao authLogDao;
 
     @RequestMapping(value = "/get", method = {RequestMethod.POST})
     @ResponseBody
     public String get(String key,HttpServletRequest request) {
+        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         String [] keys=key.split(",");
         String  authModel=null;
 
@@ -77,13 +83,27 @@ public class HttpAction {
             authModel=new AuthModel(new byte[]{1},AuthModel.toData(1,1),Constants.KEY).toString();
         }
         else if("2".equals(keys[1])){
-            //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
-            String lockNum = "";
+           /* //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
+
             if(keys.length==5){
                 lockNum=keys[4];
             }else {
                 lockNum = "00" + keys[3];
                 lockNum = addZeroForNum(lockNum, 16);
+            }*/
+            //初始化锁      key=0000000002,2,DF:98:deptId,lockCode
+            String lockNum = "";
+            if(keys.length==5){
+                lockNum=keys[4];
+            }else {
+                Object value = redisTemplateUtil.get("lanya-lock-client"+keys[3]);
+                if (value == null) {
+                    lockNum = StringUtil.addZeroForNum(keys[3], 16);
+                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
+                } else {
+                    lockNum = String.valueOf(Long.parseLong(value.toString()) + 1);
+                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
+                }
             }
             authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
 
