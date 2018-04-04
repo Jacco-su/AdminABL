@@ -96,13 +96,13 @@ public class HttpAction {
             if(keys.length==5){
                 lockNum=keys[4];
             }else {
-                Object value = redisTemplateUtil.get("lanya-lock-client"+keys[3]);
+                Object value = redisTemplateUtil.get("lanya-lock-client_HW"+keys[3]);
                 if (value == null) {
                     lockNum = StringUtil.addZeroForNum(keys[3], 16);
-                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
+                    redisTemplateUtil.set("lanya-lock-client_HW"+keys[3], lockNum);
                 } else {
                     lockNum = String.valueOf(Long.parseLong(value.toString()) + 1);
-                    redisTemplateUtil.set("lanya-lock-client"+keys[3], lockNum);
+                    redisTemplateUtil.set("lanya-lock-client_HW"+keys[3], lockNum);
                 }
             }
             authModel=new AuthModel(new byte[]{2},AuthModel.toLockData(32,lockNum),Constants.KEY).toString();
@@ -124,6 +124,7 @@ public class HttpAction {
 //        jsonDataProtocol.setContent(dataProtocol.toString());
 //        jsonDataProtocol.setDataType("client");
 
+//        String getUrl="http://47.104.150.0:8888";
         String getUrl="http://localhost:8888";
         String param=dataProtocol.toString()+collectoreID;
         String message = HttpsConnection.sendGet(getUrl, param,"utf-8");
