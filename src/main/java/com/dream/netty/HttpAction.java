@@ -71,9 +71,6 @@ public class HttpAction {
             if(!"".equals(keys[6])) {
                 authLog.setAuthEndTime(FormatDate.dateSdfHHmmssParse(keys[6]));
             }
-            Qgdis qgdis=new Qgdis();
-            qgdis.setId(keys[8]);
-            authLog.setQgdis(qgdis);
             authLogDao.save(authLog);
             authModel=new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(keys[7],8)),keys[4],"DD:17:16:65:FB:33",keys[5],keys[6]),Constants.LOCK_KEY).toString();//
         }

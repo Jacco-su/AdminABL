@@ -25,8 +25,8 @@ public class AuthLog {
 	private String authStatus;//授权状态
 	private String authKeysId;
 	private String authLocksId;
-	private Qgdis qgdis;
 	private String collectorId;//采集器ID
+	private String disId;
 	@Id
 	public String getId() {
 		return id;
@@ -124,15 +124,8 @@ public class AuthLog {
 	public void setAuthLocksId(String authLocksId) {
 		this.authLocksId = authLocksId;
 	}
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "disId", nullable = false, updatable = true)
-	public Qgdis getQgdis() {
-		return qgdis;
-	}
 
-	public void setQgdis(Qgdis qgdis) {
-		this.qgdis = qgdis;
-	}
+
 
 	public String getCollectorId() {
 		return collectorId;
@@ -140,5 +133,13 @@ public class AuthLog {
 
 	public void setCollectorId(String collectorId) {
 		this.collectorId = collectorId;
+	}
+
+	public String getDisId() {
+		return disId;
+	}
+
+	public void setDisId(String disId) {
+		this.disId = disId;
 	}
 }

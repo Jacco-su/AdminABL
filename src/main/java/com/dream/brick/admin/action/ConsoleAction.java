@@ -73,6 +73,10 @@ public class ConsoleAction {
 				}*/
 				//String qgorgId=dept.getQgorgId();
 				//Qgorg qgorg=deptDao.find(Qgorg.class, qgorgId);
+				String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+
+				request.getSession().setAttribute("userUUID",uuid);
+
 				request.getSession().setAttribute("admin", admin);
 				request.getSession().setAttribute("dept", dept);
 				//request.getSession().setAttribute("seqgorg",qgorg);

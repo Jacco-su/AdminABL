@@ -1,7 +1,6 @@
 package com.dream.brick.equipment.dao.impl;
 
 import com.dream.brick.equipment.dao.IKeysAuthDao;
-import com.dream.brick.equipment.dao.IKeyssDao;
 import com.dream.framework.dao.BaseDaoImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,5 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
  **/
 @Transactional
 @Repository
-public class KeysAuthDaoImpl extends BaseDaoImpl implements IKeysAuthDao{
+public class KeysAuthDaoImpl extends BaseDaoImpl implements IKeysAuthDao {
 }
