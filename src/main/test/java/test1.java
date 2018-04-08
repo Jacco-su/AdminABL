@@ -4,7 +4,7 @@ import com.dream.brick.equipment.action.CaptureAction;
 
 public class test1 {
 
-//    public static void main(String[] arga) {
+//    public static void HttpMain(String[] arga) {
 //        CaptureAction.CalculateGeoServlet().;
 //        System.out.println(os);
 //    }
@@ -21,7 +21,7 @@ public class test1 {
     }
 
 //    //ftp文件拉取测试
-//    public static void main(String[] args) {
+//    public static void HttpMain(String[] args) {
 //        try {
 //            FtpUtil.downfile("D:/ftp/");
 //        } catch (Exception e) {
@@ -36,7 +36,7 @@ public class test1 {
 //public ChartsAction charts;
 //    ChartsAction a = charts.init();
 //    ChartsAction b = charts.service(1,2);
-//    public static void main (String[] a){
+//    public static void HttpMain (String[] a){
 //
 //
 //       System.out.println(a);

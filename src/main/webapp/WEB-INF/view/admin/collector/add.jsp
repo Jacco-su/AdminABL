@@ -29,7 +29,7 @@
         <table class="mytable" align="center">
 
             <tr>
-                <td>采集器ID:</td>
+                <td>控制器ID:</td>
                 <td>
                     <input name="ccode" id="ccode" class="easyui-validatebox" required="true" onblur="ce()"
                            validType="ccode"/>
@@ -90,12 +90,12 @@
 
     function ce() {
         var p = $("#ccode").val();
-        if (!p.match(/\d{8}$/)) {
-//            alert("请输入8位数字！");
-            $.messager.alert('提示', '请输入8位数字的采集器ID！', 'warning');
+        if (!p.match(/\d{5}$/)) {
+//            alert("请输入5位数字！");
+            $.messager.alert('提示', '请输入5位数字的控制器ID！', 'warning');
         }
-        if (p.length > 8) {
-            $.messager.alert('提示', '采集器ID输入超过8位！', 'warning');
+        if (p.length > 5) {
+            $.messager.alert('提示', '控制器ID输入超过5位！', 'warning');
         }
 
     };
