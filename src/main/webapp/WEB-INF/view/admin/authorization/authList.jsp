@@ -19,7 +19,9 @@
     <script type="text/javascript" src="${basePath}/js/calendar/WdatePicker.js"></script>
     <script type="text/javascript">
         var basePath="${basePath}";
+        var deptId = "";
         $(function() {
+            $('#tr_collectore').hide();
            // getkeys();
             $('#tree').tree({
                 checkbox: false,
@@ -29,6 +31,7 @@
                 },
                 onClick:function(node){
                     refresh(node.id);
+                    deptId = node.areaCode;
                 },onLoadSuccess: function (node, data) {
                     $('#tree').tree('expandAll');
                 }
@@ -170,7 +173,7 @@
         function keyBinding() {
             var key=$('#collector').combobox('getText')
                 +",7,"
-                +$('#collectore').combobox('getText')+","
+                +""+","
                 +""
                 +","
                 +$('#users').combobox('getValue');
@@ -195,7 +198,8 @@
             });
         }
         function keyTiming() {
-            var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+""+",";
+//            var key=$('#collector').combobox('getText')+",12,"+$('#collectore').combobox('getText')+","+""+",";  去掉控制器
+            var key=$('#collector').combobox('getText')+",12,"+""+","+""+",";
             var data={
                 "key":key
             };
@@ -231,7 +235,8 @@
             }
             var key=$('#collector').combobox('getText')
                 + ",5,"
-                +$('#collectore').combobox('getText')+","
+//                +$('#collectore').combobox('getText')+","
+                +""+","
                 +""+","
                 +$('#locks').val()+","
                 +$('#startDate').val()+","
@@ -262,8 +267,9 @@
         function getLock(t) {
             var key=$('#collector').combobox('getText') +","
                 +t+","
-                +$('#collectore').combobox('getText')+","
+//                +$('#collectore').combobox('getText')+","
                 +""+","
+                +deptId+","
                 +$('#locks').val()+","
                 +$('#startDate').val()+","
                 +$('#endDate').val()+","
@@ -331,7 +337,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>采集器:</td>
+                            <td>控制器:</td>
                             <td colspan="3">
                                 <select class="easyui-combobox" id="collector" name="collector" style="width: 180px;"
                                         data-options="editable:false,valueField:'id', textField:'text'">
@@ -339,7 +345,7 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="tr_collectore">
                             <td>控制器:</td>
                             <td colspan="3">
                                 <select class="easyui-combobox" name="collectore" id="collectore" style="width: 180px;"
@@ -375,7 +381,7 @@
                                     <option value="0">---请选择---</option>
                                 </select></td>--%>
                             <td>
-                                <button class="easyui-linkbutton" onclick="getLock(2)">初始门锁</button>
+                                <button class="easyui-linkbutton" onclick="getLock(2)">初始化锁</button>
                             </td>
                             <td>
                                 <button class="easyui-linkbutton" onclick="getLock(1)">在线门锁信息</button>

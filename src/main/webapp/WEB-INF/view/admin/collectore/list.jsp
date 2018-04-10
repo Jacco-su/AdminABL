@@ -54,7 +54,7 @@
                     width: $(this).width() * 0.1,
                     align: 'center'
                 }, {
-                    title: '控制器MAC地址',
+                    title: '控制器ID',
                     field: 'ceMAC',
                     width: $(this).width() * 0.2,
                     align: 'center'
@@ -65,7 +65,7 @@
 //                    width: $(this).width() * 0.1,
 //                    align: 'center'
 //                },
-                    {
+                    /*{
                         title: '采集器ID',
                         field: 'ccode',
                         formatter: function (value, rowData, rowIndx) {
@@ -73,7 +73,7 @@
                         },
                         width: $(this).width() * 0.2,
                         align: 'center'
-                    },
+                    },*/
                     {
                         title: '所属站点',
                         field: 'disName',
@@ -153,10 +153,10 @@
 
             function save() {
                 var p = $("#ceMAC").val();
-                if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
+                /*if (!p.match(/[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/)) {
                     $.messager.alert('提示', '请输入正确格式的MAC！', 'warning');
                     return;
-                }
+                }*/
                 $('#addForm').form('submit', {
                     onSubmit: function () {
                         return $(this).form('validate');

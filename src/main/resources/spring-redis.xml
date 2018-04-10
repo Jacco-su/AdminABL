@@ -21,9 +21,9 @@
     </bean>
     <!-- redis连接工厂 -->
     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <property name="hostName" value="127.0.0.1"></property>
+        <property name="hostName" value="47.104.150.0"></property>
         <property name="port" value="6379"></property>
-        <property name="password" value=""></property>
+        <property name="password" value="hw@redis_321"></property>
         <property name="poolConfig" ref="jedisConfig"></property>
     </bean>
     <!-- redis操作模板，这里采用尽量面向对象的模板 -->

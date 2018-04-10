@@ -42,6 +42,8 @@ public class BasicData {
 
     public static IAuthLogDao authLogDao;
     public static IOpenLogDao openLogDao;
+	public static IKeysAuthDao keysAuthDao;
+
 
 	public static SpringUtil getSprintUtil()
 	{
@@ -63,6 +65,8 @@ public class BasicData {
 		IKeysListDao = (IKeysListDao) SpringUtil.getObject("keysListDaoImpl");
 		authLogDao=(IAuthLogDao) SpringUtil.getObject("authLogDaoImpl");
 		openLogDao=(IOpenLogDao) SpringUtil.getObject("openLogDaoImpl");
+		keysAuthDao=(IKeysAuthDao) SpringUtil.getObject("keysAuthDaoImpl");
+
 
 	}
 	/**

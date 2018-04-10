@@ -8,6 +8,7 @@ import com.dream.brick.equipment.dao.IAuthLogDao;
 import com.dream.brick.equipment.dao.IChartsDao;
 import com.dream.brick.listener.SessionData;
 import com.dream.framework.dao.Pager;
+import com.dream.netty.HttpsConnection;
 import com.dream.socket.entity.AuthModel;
 import com.dream.socket.entity.DataProtocol;
 import com.dream.socket.entity.JsonDataProtocol;
@@ -83,24 +84,42 @@ public class AuthLogAction {
             authLog.setAuthStatus("0");
             authLog.setCreateTime(FormatDate.getYMdHHmmss());
             authLogDao.save(authLog);
-            message = StringUtil.jsonValue("1", "添加授权任务成功！");
+//            message = StringUtil.jsonValue("1", "添加授权任务成功！");
         } catch (Exception e) {
             e.printStackTrace();
             message = StringUtil.jsonValue("0", AppMsg.ADD_ERROR);
         }
         String adminId= SessionData.getAdminId(request);
-        if(StringUtils.isNotEmpty(authLog.getCollectorId())){
-            auth(authLog,adminId,uuid,authLog.getCollectorId());
+        message = auth(authLog,adminId,uuid,authLog.getCollectorId());
+        /*if(StringUtils.isNotEmpty(authLog.getCollectorId())){
+            message = auth(authLog,adminId,uuid,authLog.getCollectorId());
         }else{
             auth(authLog,adminId,uuid);
-        }
+        }*/
         return message;
     }
-    private void auth(AuthLog authLog,String adminId,String uuid,String collectorId){
+    private String auth(AuthLog authLog,String adminId,String uuid,String collectorId){
+        String authModel = new AuthModel(new byte[]{5},AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(authLog.getUser().getId(),8)),authLog.getAuthLocksId(),"DD:17:16:65:FB:33",FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime())),Constants.LOCK_KEY).toString();
+        String macAddess="DD:17:16:65:FB:33".replace(":","");
+        macAddess="00000000000000000000"+macAddess;
+
+        DataProtocol dataProtocol=new DataProtocol(new byte[]{00,01}, ByteUtil.hexToBytes(macAddess),ByteUtil.hexToBytes(authModel));
+        JsonDataProtocol jsonDataProtocol=new JsonDataProtocol();
+//            jsonDataProtocol.setCollectorId(keys[0]);
+//        jsonDataProtocol.setContent(dataProtocol.toString());
+//        jsonDataProtocol.setDataType("client");
+
+        String getUrl="http://localhost:8888";
+        String param=dataProtocol.toString()+authLog.getCollectorId();
+        String message = HttpsConnection.sendGet(getUrl, param,"utf-8");
+//        System.out.println("Get请求:"+HttpsConnection.sendGet(getUrl, param,"utf-8"));
+        System.out.println("返回内容------"+message);
+
+        return  StringUtil.jsonValue("1", message.replace("*",""));
         //读取控制器
-        List<Collectore> collectoreList = collectoreDao.findCollectoreByCollector(collectorId);
+//        List<Collectore> collectoreList = collectoreDao.findCollectoreByCollector(collectorId);
         // System.out.println(collectoreList);
-        if (collectoreList != null && collectoreList.size() > 0) {
+        /*if (collectoreList != null && collectoreList.size() > 0) {
             for (int z = 0; z < collectoreList.size(); z++) {
                 Collectore collectore = collectoreList.get(z);
                 if(StringUtils.isNotEmpty(collectore.getCeMAC())){
@@ -113,18 +132,18 @@ public class AuthLogAction {
                                 System.out.println(locks[i]);
                                 System.out.println(ByteUtil.bytesToHex(locks[i].getBytes()));
                                 String authModel = new AuthModel(new byte[]{5}, AuthModel.AuthorizationKey(ByteUtil.hexStrToByteArray(ByteUtil.addZeroForNum(authLog.getUser().getId(),8)), locks[i], collectore.getCeMAC(), FormatDate.dateParse(authLog.getAuthStartTime()), FormatDate.dateParse(authLog.getAuthEndTime())), Constants.LOCK_KEY).toString();//
-                                System.out.println("开始授权！");
+//                                System.out.println("开始授权！");
                                 auth("5", macAddess,collectore.getCollector().getCcode(), adminId, authModel,uuid);//ByteUtil.hexStrToByteArray(ByteUtil.bytesToHex(keys[4].getBytes()))
                             }
                         }
                     }
                 }
             }
-        }
+        }*/
     }
    private void auth(AuthLog authLog,String adminId,String uuid){
        //读取采集器
-       List<Collector> collectorList=collectorDao.findCollectorByQgdisid(authLog.getQgdis().getId());
+       List<Collector> collectorList=collectorDao.findCollectorByQgdisid(authLog.getDisId());
        if(collectorList!=null&&collectorList.size()>0) {
            for (int j = 0; j < collectorList.size(); j++) {
                Collector collector = collectorList.get(j);
@@ -133,7 +152,7 @@ public class AuthLogAction {
        }
    }
     private String  auth(String t,String macAddess,String collectorId,String adminId,String authModel,String uuid){
-        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
+//        redisTemplateUtil = new RedisTemplateUtil(redisTemplate);
         DataProtocol dataProtocol=new DataProtocol(new byte[]{00,01}, ByteUtil.hexToBytes(macAddess),ByteUtil.hexToBytes(authModel));
         JsonDataProtocol jsonDataProtocol=new JsonDataProtocol();
         jsonDataProtocol.setCollectorId(collectorId);

@@ -32,11 +32,6 @@
                     getLocks(row.id,0);
                 }
             });
-            $('#controller_dissList').datagrid({
-                onCheck:function(index, row){
-                    getCollector(row.id,0);
-                }
-            });
             //获取钥匙
             function getkeys(userId) {
                 var data={
@@ -72,7 +67,6 @@
                         });
                     }
                     $('#dissList').datagrid('loadData', disaData);
-                    $('#controller_dissList').datagrid('loadData', disaData);
                 });
             }
             //获取门锁
@@ -94,26 +88,7 @@
                     $('#locksList').datagrid('loadData', locksData);
                 });
             }
-            //获取控制器--------------------------------
-            function getCollector(obj) {
-                var data={
-                    "disaId":obj
-                };
-                $.post(basePath+"/authorization/disa/collector",data,function(data){
-                    var d=JSON.parse(data);
-                    var locksData = []; //创建数组
-                    for(var i=0;i<d.length;i++){
-                        locksData.push({
-                            "id": d[i].id,
-                            "text": d[i].ccode
-                        });
-                    }
-                    $('#controllerList').datagrid('loadData', locksData);
-                });
-            }
-
             $("#stepTwo").panel('close');
-            $("#stepFour").panel('close');
             $("#stepThere").panel('close');
             $('#tree').tree({
                 checkbox: false,
@@ -188,38 +163,23 @@
                     }
                 });
             }
-        });
-        function onlineAuth() {
-            var key=$('#collector').combobox('getText')
-                +",5,"
-                +$('#collectore').combobox('getText')+","
-                +$('#keys').combobox('getText')+","
-                +$('#locks').combobox('getText')+","
-                +$('#startDate').val()+","
-                +$('#endDate').val()+","
-                +$('#users').combobox('getValue');
-            var data={
-                "key":key
-            };
-            $.ajax({
-                type: "post",
-                url: basePath+"/redis/get",
-                cache:false,
-                async:true,
-                data:data,
-                dataType: "json",
-                success: function(data){
-                    if(data.result=="1"){
-                        alert(data.message);
-
-                    }else{
-                        alert("授权失败!");
-                    }
+            //获取可用串口
+            $.post(basePath+"/offline/serial",null,function(data){
+                var d=data.split(",");
+                $('#serials').empty();
+                var serialData = []; //创建数组
+                for(var i=0;i<d.length;i++){
+                    serialData.push({
+                        "id": d[i],
+                        "text": d[i]
+                    });
                 }
-
+                if( d[0]!=null) {
+                    $("#serials").combobox("clear")//下拉框加载数据,设置默认值为
+                        .combobox("loadData", serialData).combobox("setValue", d[0]);
+                }
             });
-        }
-
+        });
         function getUsers(obj) {
             var data={
                 "disaId":obj
@@ -241,7 +201,6 @@
             if(num==1){
                 $("#stepOne").panel('open');
                 $("#stepTwo").panel('close');
-                $("#stepFour").panel('close');
                 $("#stepThere").panel('close');
             }
             if(num==2){
@@ -249,7 +208,6 @@
                     //getUsers(deptId);
                     $("#stepOne").panel('close');
                     $("#stepTwo").panel('open');
-                    $("#stepFour").panel('close');
                     $("#stepThere").panel('close');
                 }else{
                     $.messager.alert('警告', '请选择一个区域', 'warning');
@@ -268,19 +226,7 @@
                 }
                 $("#stepOne").panel('close');
                 $("#stepTwo").panel('close');
-                $("#stepFour").panel('close');
                 $("#stepThere").panel('open');
-            }
-            if(num==4){
-                if (deptId != "") {
-                    //getUsers(deptId);
-                    $("#stepOne").panel('close');
-                    $("#stepTwo").panel('close');
-                    $("#stepFour").panel('open');
-                    $("#stepThere").panel('close');
-                }else{
-                    $.messager.alert('警告', '请选择一个区域', 'warning');
-                }
             }
         }
         //离线授权
@@ -299,13 +245,8 @@
             var keysId=keysRow[0].id;
             var dissRow=$("#dissList").datagrid("getChecked");
             var locksRows=$("#locksList").datagrid("getChecked");
-            var collector=$("#controllerList").datagrid("getChecked");
             if(dissRow==""){
                 $.messager.alert('警告', '请选择一个站点', 'warning');
-                return;
-            }
-            if(collector==""){
-                $.messager.alert('警告', '请选择一个控制器', 'warning');
                 return;
             }
             if(locksRows==""){
@@ -327,17 +268,16 @@
                 $.messager.alert('警告', '请填写授权结束时间', 'warning');
                 return;
             }
+            var serial=$('#serials').combobox('getValue');
+            if(serial==""){
+                alert("请选择串口!");
+                return;
+            }
             var authLocks="";
             var authLocksId="";
-            var collectorId="";
-            var collectorText="";
             for(var i=0;i<locksRows.length;i++){
                 authLocks+=locksRows[i].name+",";
                 authLocksId+=locksRows[i].id+",";
-            }
-            for(var i=0;i<collector.length;i++){
-                collectorText+=collector[i].text+",";
-                collectorId+=collector[i].id+",";
             }
             var data={
                 "user.id":userId,
@@ -348,16 +288,15 @@
                 "authEndTime":authEndTime,
                 "authKeys":$("#keysList").datagrid("getChecked")[0].keyssCode,
                 "authKeysId":keysId,
-                "qgdis.id":dissRow[0].id,
+                "disId":dissRow[0].id,
                 "authLocks":authLocks,
                 "authLocksId":authLocksId,
-                "collectorId":collectorText,
+                "serial":serial
             };
-            console.log('hhhhhhhhhhhhhhh'+JSON.stringify(data));
-
+            console.log(data);
             $.ajax({
                 type: "post",
-                url: basePath + "/authlog/save",
+                url: basePath + "/offline/save",
                 cache: false,
                 async: true,
                 data: data,
@@ -386,6 +325,15 @@
             <div class="easyui-panel" title="开始授权" style="width:900px" id="stepOne">
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
+                        <tr>
+                            <td>串口:</td>
+                            <td colspan="3">
+                                <select class="easyui-combobox" name="serials" id="serials" style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option value="0">---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
                         <tr>
                             <td>授权类型:</td>
                             <td colspan="5">
@@ -448,52 +396,6 @@
                         </tr>
                         <tr>
                             <td><button class="easyui-linkbutton" onclick="stepAuth(1)">上一步</button></td>
-                            <td><button class="easyui-linkbutton" onclick="stepAuth(4)">下一步</button></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="easyui-panel" title="区域->控制器" style="width:800px" id="stepFour">
-                <div style="padding:10px 60px 20px 60px">
-                    <table cellpadding="5">
-                        <tr>
-                            <td colspan="3">
-                                <table class="easyui-datagrid" id="controller_dissList"  title = "站点列表" style="width:350px;height:250px">
-                                    <thead>
-                                    <tr>
-                                        <th data-options="field:'id',checkbox:true"></th>
-                                        <th data-options="field:'name'" width="520px">站点</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td colspan="3">
-                                <table class="easyui-datagrid" title = "控制器列表" id="controllerList"  style="width:350px;height:250px">
-                                    <thead>
-                                    <tr>
-                                        <th data-options="field:'id',checkbox:true"></th>
-                                        <th data-options="field:'text'" width="520px">控制器</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </td>
-                            <%-- <td colspan="2">
-                                 <div class="easyui-panel" title="已选中门锁列表">
-                                     <div style="padding:10px 60px 20px 60px">
-                                         <table cellpadding="5" style="width:300px;">
-                                         </table>
-                                     </div>
-                                 </div>
-                             </td>--%>
-                        </tr>
-                        <tr>
-                            <td><button class="easyui-linkbutton" onclick="stepAuth(2)">上一步</button></td>
                             <td><button class="easyui-linkbutton" onclick="stepAuth(3)">下一步</button></td>
                         </tr>
                     </table>
@@ -539,7 +441,7 @@
                             </td>--%>
                         </tr>
                         <tr>
-                            <td><button class="easyui-linkbutton" onclick="stepAuth(4)">上一步</button></td>
+                            <td><button class="easyui-linkbutton" onclick="stepAuth(2)">上一步</button></td>
                             <td><button class="easyui-linkbutton" onclick="offlineAuth(3)">完成</button></td>
                         </tr>
                     </table>

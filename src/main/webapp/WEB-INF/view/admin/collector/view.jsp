@@ -9,11 +9,11 @@
 <div>
     <table class="mytable" align="center">
         <tr>
-            <td>采集器编号:</td>
+            <td>控制器编号:</td>
             <td>${collectora.id}</td>
         </tr>
         <tr>
-            <td>采集器ID</td>
+            <td>控制器ID</td>
             <td>${collectora.ccode}</td>
         </tr>
         <tr>

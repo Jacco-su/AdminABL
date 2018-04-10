@@ -23,6 +23,7 @@
         var deptId="";
         var deptAreaCode="";
         $(function () {
+            $('#tr_collectore').hide();
             $('#tree').tree({
                 checkbox: false,
                 url: basePath + '/dept/getChildren',
@@ -141,7 +142,7 @@
                     }
                 });
                 //获取控制器
-                $('#collector').combobox({
+                /*$('#collector').combobox({
                     onSelect: function (row) {
                         if (row != null) {
                             var data = {
@@ -168,7 +169,7 @@
                             });
                         }
                     }
-                });
+                });*/
             }
         });
        function initLock() {
@@ -188,7 +189,8 @@
             $("#lockCode").val("");
             var key = $('#collector').combobox('getText') + ","
                 + t + ","
-                + $('#collectore').combobox('getText')+","+deptAreaCode+","+lockCode;
+//                + $('#collectore').combobox('getText')+","+deptAreaCode+","+lockCode;
+                + ""+","+deptAreaCode+","+lockCode;
             var data = {
                 "key": key
             };
@@ -244,7 +246,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>选择采集器:</td>
+                                    <td>控制器:</td>
                                     <td colspan="2">
                                         <select class="easyui-combobox" id="collector" name="collector"
                                                 style="width: 180px;"
@@ -253,7 +255,7 @@
                                         </select>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="tr_collectore">
                                     <td>控制器:</td>
                                     <td colspan="2">
                                         <select class="easyui-combobox" name="collectore" id="collectore"
@@ -274,9 +276,9 @@
                                     <td colspan="2">
                                         <input id="lockCode" name="lockCode" style="width: 200px;" required="true"/>
                                         <a class="easyui-linkbutton"
-                                           onclick="getLock(1,'')">获取</a>
+                                           onclick="getLock(2,'')">初始化锁</a>
                                         <a class="easyui-linkbutton"
-                                           onclick="getLock(2,'')">初始化</a>
+                                           onclick="getLock(1,'')">在线门锁信息</a>
                                         <a class="easyui-linkbutton"
                                            onclick="initLock(3)">初始化锁识别码</a>
                                 </tr>
@@ -328,7 +330,8 @@
                 var data = {
                     "qgdis.id": $('#disa').combobox('getValue'),
                     "collector": $('#collector').combobox('getValue'),
-                    "collectore": $('#collectore').combobox('getValue'),
+//                    "collectore": $('#collectore').combobox('getValue'),
+                    "collectore": "",
                     "lockNum": $("#lockNum").val(),
                     "lockCode": $("#lockCode").val(),
                     "lockDate": $("#lockDate").val(),
