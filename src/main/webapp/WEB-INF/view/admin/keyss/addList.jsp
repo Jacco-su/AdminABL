@@ -227,9 +227,47 @@
                 <div style="padding:10px 60px 20px 60px">
                     <table cellpadding="5">
                         <tr>
+                            <td>站点:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" name="qgdis.id" id="disa" style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'"
+                                        required="true">
+                                    <option>---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>控制器:</td>
+                            <td colspan="2">
+                                <select class="easyui-combobox" id="collector" name="collector"
+
+                                        style="width: 180px;"
+                                        data-options="editable:false,valueField:'id', textField:'text'">
+                                    <option>---请选择---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <%--<tr id="tr_collectore">--%>
+                            <%--<td>控制器:</td>--%>
+                            <%--<td colspan="2">--%>
+                                <%--<select class="easyui-combobox" name="collectore" id="collectore"--%>
+                                        <%--style="width: 200px;"--%>
+                                        <%--data-options="editable:false,valueField:'id', textField:'text'"--%>
+                                        <%--required>--%>
+                                    <%--<option>---请选择---</option>--%>
+                                <%--</select>--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+                        <tr>
                             <td>钥匙编号:</td>
                             <td colspan="2"><input name="keyssCode" id="keyssCode" value="" style="width: 180px;"
                                                    class="easyui-validatebox" required="true"/></td>
+                        </tr>
+                        <tr>
+                            <td>自定义名称:</td>
+                            <td>
+                                <input name="keyssName" class="easyui-validatebox" value="" required="true"/>
+                            </td>
                         </tr>
                         <tr>
                             <td>钥匙MAC:</td>

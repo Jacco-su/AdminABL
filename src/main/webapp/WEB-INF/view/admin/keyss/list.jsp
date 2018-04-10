@@ -83,11 +83,11 @@
                         iconCls: 'icon-view',
                         handler: seedetail
                     },
-//                    {
-//                        iconCls: "icon-add",
-//                        text: "添加",
-//                        handler: add
-//                    },
+                    {
+                        iconCls: "icon-add",
+                        text: "添加",
+                        handler: add
+                    },
                     '-', {
                         text: '修改',
                         iconCls: 'icon-edit',
