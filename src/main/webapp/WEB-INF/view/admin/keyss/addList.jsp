@@ -33,7 +33,22 @@
                     refresh(node.id);
                 }
             });
-
+            //获取钥匙
+//            function getkeys() {
+//                $.post(basePath+"/authorization/keys",null,function(data){
+//                    var d=JSON.parse(data);
+//                    $('#keys').empty();
+//                    var keyData = []; //创建数组
+//                    for(var i=0;i<d.length;i++){
+//                        keyData.push({
+//                            "id": d[i].keyssMAC,
+//                            "text": d[i].keyssName
+//                        });
+//                    }
+//                    $("#keys").combobox("clear")//下拉框加载数据,设置默认值为
+//                        .combobox("loadData", keyData).combobox("setValue", d[0].keyssMAC);
+//                });
+//            }
             //获取站点
             function refresh(obj) {
                 var data = {
